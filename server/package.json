@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "npm ci --omit=dev",
-    "postinstall": "npm run build"
+    "build": "npm install --omit=dev"
   },
   "keywords": [],
   "author": "",

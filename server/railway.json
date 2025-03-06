@@ -2,7 +2,7 @@
   "build": {
     "builder": "nixpacks",
     "config": {
-      "installCommand": "npm ci --omit=dev",
+      "installCommand": "npm install --omit=dev",
       "buildCommand": "npm run build",
       "startCommand": "npm start"
     }
