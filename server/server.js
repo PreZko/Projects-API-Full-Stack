@@ -35,6 +35,13 @@ app.use((req, res, next) => {
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))
 
 // Routes
+app.get('/test', (req, res) => {
+  res.json({ message: 'API is working!' })
+})
+app.post('/test', (req, res) => {
+  console.log(req.body)
+  res.json({ message: 'API is working1' })
+})
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/projects', authMiddleware, projectsRouter)
 
