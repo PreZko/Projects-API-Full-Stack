@@ -26,37 +26,41 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 
 // Extra security
-app.use(helmet())
-app.use(cors())
+//app.use(helmet())
+//app.use(cors())
+//app.use((req, res, next) => {
+//  if (req.body) req.body = JSON.parse(xss(JSON.stringify(req.body)))
+//  next()
+//})
+//app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))
 app.use((req, res, next) => {
-  if (req.body) req.body = JSON.parse(xss(JSON.stringify(req.body)))
+  console.log(`Incoming request: ${req.method} ${req.url}`)
   next()
 })
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))
-
 // Routes
 app.get('/test', (req, res) => {
   res.json({ message: 'API is working!' })
 })
-app.post('/test', (req, res) => {
-  console.log(req.body)
-  res.json({ message: 'API is working1' })
-})
-app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/projects', authMiddleware, projectsRouter)
+//app.post('/test', (req, res) => {
+//  console.log(req.body)
+//  res.json({ message: 'API is working1' })
+//})
+//app.use('/api/v1/auth', authRouter)
+//app.use('/api/v1/projects', authMiddleware, projectsRouter)
 
 // Error handling
-app.use(notFoundMiddleware)
-app.use(errorHandlerMiddleware)
+//app.use(notFoundMiddleware)
+//app.use(errorHandlerMiddleware)
 
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI)
+    console.log('Database connected successfully')
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}...`)
     })
   } catch (error) {
-    console.log(error)
+    console.log('Failed to start server', error)
   }
 }
 
