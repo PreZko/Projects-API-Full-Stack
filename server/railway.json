@@ -1,0 +1,10 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "config": {
+      "installCommand": "npm ci --omit=dev",
+      "buildCommand": "npm run build",
+      "startCommand": "npm start"
+    }
+  }
+}
