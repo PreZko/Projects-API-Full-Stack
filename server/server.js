@@ -4,7 +4,7 @@ import 'express-async-errors'
 
 import cors from 'cors'
 import helmet from 'helmet'
-import xss from 'xss-clean'
+import xss from 'xss'
 import rateLimit from 'express-rate-limit'
 
 import projectsRouter from './routes/projects.js'
@@ -28,7 +28,10 @@ app.use(express.json())
 // Extra security
 app.use(helmet())
 app.use(cors())
-app.use(xss())
+app.use((req, res, next) => {
+  if (req.body) req.body = JSON.parse(xss(JSON.stringify(req.body)))
+  next()
+})
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))
 
 // Routes
