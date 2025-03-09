@@ -14,6 +14,7 @@ import errorHandlerMiddleware from './middleware/error-handler.js'
 import notFoundMiddleware from './middleware/not-found.js'
 
 import authMiddleware from './middleware/authentication.js'
+import cookieParser from 'cookie-parser'
 
 import connectDB from './db/connect.js'
 
@@ -24,12 +25,19 @@ const PORT = process.env.PORT || 5000
 
 // Middleware
 app.use(express.json())
+app.use(cookieParser())
 
 // Extra security
 app.use(helmet())
-app.use(cors())
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+)
 app.use((req, res, next) => {
   if (req.body) req.body = JSON.parse(xss(JSON.stringify(req.body)))
+  console.log('request incoming')
   next()
 })
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))

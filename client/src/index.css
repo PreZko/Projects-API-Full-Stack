@@ -1,68 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
+@import 'tailwindcss';
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --background-primary: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(200, 200, 255, 1) 100%
+  );
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --background-muted: linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(0, 255, 0, 1) 100%
+  );
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  --primary: #030615;
+  --link: #2563eb;
+  --link-trans: rgba(37, 99, 235, 0.1);
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+  --border-primary: #f1f5f9;
+  --border-secondary: #bed1e7;
+  --border-highlight: #64748b;
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  --p-small: 1rem;
+  --p-large: 2rem;
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  --radius-small: 0.5rem;
+  --radius-large: 0.75rem;
+  --highlight-radius: 0.5rem;
 }
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --background-primary: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 50, 1) 100%
+    );
+    --background-muted: #1a1e32;
+
+    --primary: white;
+    --link: #60a5fa;
+    --ink-trans: rgba(37, 99, 235, 0.1);
+
+    --border-primary: #29325b;
+    --border-secondary: #323c71;
+    --border-highlight: #4649af;
+
+    --radius-small: 0.5rem;
+    --highlight-radius: 0.5rem;
   }
-  a:hover {
-    color: #747bff;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  font-family: Chakra Petch, sans-serif;
+}
+@layer base {
+  * {
+    @apply box-border m-0 p-0;
+  }
+  body {
+    @apply sm:text-base bg-primary text-primary text-sm;
+  }
+  header {
+    @apply flex items-center gap-4 justify-between;
+  }
+  p {
+    @apply block w-fit;
   }
   button {
-    background-color: #f9f9f9;
+    @apply cursor-pointer sm:w-fit text-primary bg-primary w-fit py-2 px-5 font-medium text-inherit border-[1.5px] border-solid border-secondary rounded-lg shadow-secondary duration-200 hover:button-hover;
   }
+  h1 {
+    @apply text-3xl sm:text-4xl;
+    font-family: 'Aldrich', sans-serif;
+  }
+  h2 {
+    @apply text-3xl pt-6 w-fit;
+    font-family: 'Aldrich', sans-serif;
+  }
+  input {
+    @apply sm:max-w-[600px] text-base bg-muted border border-solid border-secondary text-primary py-2 px-3 rounded-lg w-full hover:border-highlight focus:border-highlight outline-none;
+  }
+}
+@layer utilities {
+  .font-chakra {
+    font-family: 'Chakra Petch', sans-serif;
+  }
+}
+
+@utility text-primary {
+  @apply text-[#030615] dark:text-white;
+}
+@utility text-gradient {
+  @apply bg-gradient-to-r from-red-500 to-green-500 bg-clip-text text-transparent decoration-clone;
+}
+@utility bg-primary {
+  @apply bg-[#d2d2ff] dark:bg-[#000032];
+}
+@utility bg-gradient {
+  @apply bg-linear-to-r from-[#fff] to-[d2d2ff] dark:from-[#000000] dark:to-[#000032];
+}
+@utility bg-muted {
+  @apply bg-[#f8fafc] dark:bg-[#1a1e32] opacity-80;
+}
+
+@utility border-primary {
+  @apply border-[#d2d2d2] dark:border-[#29325b];
+}
+@utility border-secondary {
+  @apply border-[#bed1e7] dark:border-[#323c71];
+}
+@utility border-highlight {
+  @apply border-[#64748b] dark:border-[#4649af];
+}
+@utility shadow-secondary {
+  @apply shadow-[2px_2px_0_0_#bed1e7] dark:shadow-[2px_2px_0_0_#323c71];
+}
+@utility button-hover {
+  @apply transition-all shadow-[0_0_0_0_#bed1e7] dark:shadow-[0_0_0_0_#323c71]  translate-y-0.5 translate-x-0.5;
+}
+
+@utility modal-container {
+  @apply fixed top-0 left-0 h-full w-full flex flex-col items-center justify-center z-[100] p-4;
+}
+@utility modal-underlay {
+  @apply absolute inset-0 bg-muted z-[99] border-none w-full shadow-[unset] hover:translate-0 hover:shadow-[unset];
+}
+@utility modal-contents {
+  @apply relative z-[101] max-w-[600px] w-full my-0 mx-auto min-h-[300px] rounded-xl border border-solid border-primary
+  bg-primary p-4 flex flex-col gap-4;
 }
