@@ -12,7 +12,7 @@ export default function ProjectForm(props) {
   const [showModal, setShowModal] = useState(false)
   const [projectName, setProjectName] = useState('')
   const [description, setDescription] = useState('')
-  const [difficulty, setDifficulty] = useState(2)
+  const [difficulty, setDifficulty] = useState(3)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState(null)
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
