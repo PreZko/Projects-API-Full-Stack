@@ -72,22 +72,48 @@
   header {
     @apply flex items-center gap-4 justify-between;
   }
+  main {
+    @apply flex flex-col gap-4 flex-1;
+  }
+  footer {
+    @apply py-8 flex flex-wrap items-start gap-8;
+  }
   p {
     @apply block w-fit;
+  }
+  a {
+    @apply text-[#2563eb] dark:text-[#60a5fa] underline hover:no-underline;
   }
   button {
     @apply cursor-pointer sm:w-fit text-primary bg-primary w-fit py-2 px-5 font-medium text-inherit border-[1.5px] border-solid border-secondary rounded-lg shadow-secondary duration-200 hover:button-hover;
   }
   h1 {
-    @apply text-3xl sm:text-4xl;
+    @apply text-3xl sm:text-4xl font-bold;
     font-family: 'Aldrich', sans-serif;
   }
   h2 {
-    @apply text-3xl pt-6 w-fit;
+    @apply text-2xl sm:text-3xl pt-6 w-fit font-bold;
     font-family: 'Aldrich', sans-serif;
   }
+  h3 {
+    @apply text-xl sm:text-2xl font-bold;
+    font-family: 'Aldrich', sans-serif;
+  }
+  h4 {
+    @apply text-lg sm:text-xl;
+  }
+  h5 {
+    @apply text-base sm:text-lg;
+  }
   input {
-    @apply sm:max-w-[600px] text-base bg-muted border border-solid border-secondary text-primary py-2 px-3 rounded-lg w-full hover:border-highlight focus:border-highlight outline-none;
+    @apply max-w-[600px] text-base bg-muted border border-solid border-secondary text-primary py-2 px-3 rounded-lg sm:max-w-full w-full hover:border-highlight focus:border-highlight outline-none dark:scheme-dark;
+  }
+
+  textarea {
+    @apply max-w-[600px] text-base bg-muted border border-solid border-secondary text-primary py-2 px-3 rounded-lg sm:max-w-full w-full hover:border-highlight focus:border-highlight outline-none resize-none;
+  }
+  select {
+    @apply cursor-pointer text-base bg-muted border border-solid border-secondary text-primary py-2 px-3 rounded-lg w-full outline-none appearance-none opacity-100;
   }
 }
 @layer utilities {
@@ -103,7 +129,7 @@
   @apply bg-gradient-to-r from-red-500 to-green-500 bg-clip-text text-transparent decoration-clone;
 }
 @utility bg-primary {
-  @apply bg-[#d2d2ff] dark:bg-[#000032];
+  @apply bg-[#dedefd] dark:bg-[#000032];
 }
 @utility bg-gradient {
   @apply bg-linear-to-r from-[#fff] to-[d2d2ff] dark:from-[#000000] dark:to-[#000032];
@@ -111,21 +137,24 @@
 @utility bg-muted {
   @apply bg-[#f8fafc] dark:bg-[#1a1e32] opacity-80;
 }
+@utility bg-secondary {
+  @apply bg-[#7373bd] dark:bg-[#323c71];
+}
 
 @utility border-primary {
   @apply border-[#d2d2d2] dark:border-[#29325b];
 }
 @utility border-secondary {
-  @apply border-[#bed1e7] dark:border-[#323c71];
+  @apply border-[#4b4b88] dark:border-[#323c71];
 }
 @utility border-highlight {
-  @apply border-[#64748b] dark:border-[#4649af];
+  @apply border-[#8989e3] dark:border-[#9696ff];
 }
 @utility shadow-secondary {
-  @apply shadow-[2px_2px_0_0_#bed1e7] dark:shadow-[2px_2px_0_0_#323c71];
+  @apply shadow-[2px_2px_0_0_#4b4b88] dark:shadow-[2px_2px_0_0_#323c71];
 }
 @utility button-hover {
-  @apply transition-all shadow-[0_0_0_0_#bed1e7] dark:shadow-[0_0_0_0_#323c71]  translate-y-0.5 translate-x-0.5;
+  @apply transition-all shadow-[0_0_0_0_#7373bd] dark:shadow-[0_0_0_0_#323c71]  translate-y-0.5 translate-x-0.5;
 }
 
 @utility modal-container {
@@ -137,4 +166,40 @@
 @utility modal-contents {
   @apply relative z-[101] max-w-[600px] w-full my-0 mx-auto min-h-[300px] rounded-xl border border-solid border-primary
   bg-primary p-4 flex flex-col gap-4;
+}
+
+@utility benefits-list {
+  @apply flex flex-col gap-2;
+}
+
+@utility info-card {
+  @apply border border-solid border-[#2563eb]/10 bg-muted text-primary p-4 rounded-lg 
+  text-sm flex flex-col gap-2;
+}
+
+@utility section-header {
+  @apply flex items-center gap-2;
+}
+
+@utility button-card {
+  @apply text-primary w-full flex items-center justify-center flex-col shadow-none border-2 border-solid border-secondary bg-muted p-2 rounded-lg;
+}
+@utility diff-button-selected {
+  @apply border-highlight;
+}
+@utility diff-grid {
+  @apply grid grid-cols-5 gap-4;
+}
+@utility projects-grid {
+  @apply grid grid-cols-2 sm:grid-cols-3 gap-4;
+}
+@utility project-button {
+  @apply flex flex-col p-0 w-full;
+}
+@utility project-info {
+  @apply p-4 flex flex-col gap-2;
+}
+
+@utility action-buttons {
+  @apply flex flex-row w-full justify-between;
 }

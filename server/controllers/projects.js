@@ -3,7 +3,7 @@ import Project from '../models/Project.js'
 
 export const getAllProjects = async (req, res) => {
   const projects = await Project.find({ userId: req.user.userId }).sort(
-    'createdAt'
+    '-createdAt'
   )
   res.status(200).json({ projects, count: projects.length })
 }

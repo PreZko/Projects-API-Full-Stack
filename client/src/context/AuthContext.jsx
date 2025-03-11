@@ -18,7 +18,6 @@ export function AuthProvider({ children }) {
         'http://localhost:3000/api/v1/auth/verify-token',
         { withCredentials: true }
       )
-      console.log('response: ', response.data)
       console.log('User successfully authenticated')
       setIsAuthenticated(true)
     } catch (error) {
@@ -67,6 +66,7 @@ export function AuthProvider({ children }) {
         { withCredentials: true }
       )
       await checkAuth()
+      setUserId(null)
     } catch (error) {
       console.log('Logout failed: ', error)
     }

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext'
 export default function Authentication(props) {
   const { handleCloseModal } = props
 
-  const [isRegistering, setIsRegistering] = useState(true)
+  const [isRegistering, setIsRegistering] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
@@ -39,7 +39,7 @@ export default function Authentication(props) {
 
   return (
     <>
-      <h2 className='sign-up-title'>{isRegistering ? 'Sign up' : 'Log in'}</h2>
+      <h2>{isRegistering ? 'Sign up' : 'Log in'}</h2>
       <p>{isRegistering ? 'Create an account' : 'Sign in to your account'}</p>
       {error && <p>❌ {error}</p>}
       {isRegistering && (
