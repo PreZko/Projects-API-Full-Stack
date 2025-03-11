@@ -37,7 +37,6 @@ app.use(
 )
 app.use((req, res, next) => {
   if (req.body) req.body = JSON.parse(xss(JSON.stringify(req.body)))
-  console.log(req.body)
   next()
 })
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 1000 }))

@@ -12,36 +12,43 @@ export default function Project(props) {
     },
     difficultyArr,
     handleCloseModal,
-    projects,
     setProjects,
   } = props
+
+  // States
   const [newTitle, setNewTitle] = useState(title)
   const [newDescription, setNewDescription] = useState(description)
   const [newDifficulty, setNewDifficulty] = useState(difficulty)
   const [newDate, setNewDate] = useState(createdAt)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [error, setError] = useState(null)
+
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1'
+
+  // Save updated project data
   const saveNewData = async () => {
-    setIsLoading('Saving...')
+    setIsSaving(true)
     setError(null)
 
+    //Validation
     if (!newTitle) {
       setError('Please provide project name')
-      setIsLoading(false)
+      setIsSaving(false)
+      return
+    }
+    if (!validateDate(newDate)) {
+      setError('Date must be between 1990-01-01 and 2030-12-31')
+      setIsSaving(false)
       return
     }
 
-    if (!validateDate(newDate)) {
-      setError('Date must be between 1990-01-01 and 2030-12-31')
-      setIsLoading(false)
-      return
-    }
     try {
       console.log(newDate)
       const formattedDate = new Date(newDate) || new Date()
       console.log(formattedDate)
       await axios.patch(
-        `http://localhost:3000/api/v1/projects/${projectId}`,
+        `${API_URL}/projects/${projectId}`,
         {
           title: newTitle,
           description: newDescription,
@@ -70,18 +77,19 @@ export default function Project(props) {
       setError(err.response?.data?.msg || err.message)
       console.log(err)
     } finally {
-      setIsLoading(false)
+      setIsSaving(false)
     }
   }
+
+  // Delete project
   const deleteData = async () => {
-    setIsLoading('Deleting...')
+    setIsDeleting(true)
     setError(null)
 
     try {
-      await axios.delete(`http://localhost:3000/api/v1/projects/${projectId}`, {
+      await axios.delete(`${API_URL}/projects/${projectId}`, {
         withCredentials: true,
       })
-
       setProjects((prevProjects) =>
         prevProjects.filter((project) => project._id !== projectId)
       )
@@ -90,10 +98,11 @@ export default function Project(props) {
       setError(err.response?.data?.msg || err.message)
       console.log(err)
     } finally {
-      setIsLoading(false)
+      setIsDeleting(false)
     }
   }
 
+  // Validate date range
   const validateDate = (date) => {
     const minDate = new Date('1990-01-01')
     const maxDate = new Date('2030-12-31')
@@ -104,19 +113,28 @@ export default function Project(props) {
 
   return (
     <>
+      {/* Header */}
       <h2>Edit your project</h2>
-      {error && <p className='text-red-500'>{error}</p>}
+
+      {/* Error message */}
+      {error && <p className='text-red-500'>❌ {error}</p>}
+
+      {/* Project name input */}
       <input
         placeholder='Project Name'
         onChange={(e) => setNewTitle(e.target.value)}
         value={newTitle}
       />
+
+      {/* Description textarea */}
       <textarea
         placeholder='Description'
         onChange={(e) => setNewDescription(e.target.value)}
         rows='3'
         value={newDescription}
       />
+
+      {/* Difficulty dropdown */}
       <select
         style={{
           color: difficultyArr[newDifficulty - 1].color,
@@ -140,6 +158,8 @@ export default function Project(props) {
           )
         })}
       </select>
+
+      {/* Date input */}
       <input
         onChange={(e) => setNewDate(e.target.value)}
         type='date'
@@ -148,18 +168,19 @@ export default function Project(props) {
         value={new Date(newDate).toISOString().split('T')[0]}
       ></input>
 
+      {/* Action buttons */}
       <div className='action-buttons'>
         <button
           onClick={() => saveNewData()}
           className='bg-green-700 text-green-300 border-green-500 shadow-green-500'
         >
-          {isLoading || 'SAVE'}
+          {isSaving ? 'Saving...' : 'SAVE'}
         </button>
         <button
           onClick={() => deleteData()}
           className='bg-red-700 text-red-300 border-red-500 shadow-red-500'
         >
-          {isLoading || 'DELETE'}
+          {isDeleting ? 'Deleting...' : 'DELETE'}
         </button>
       </div>
     </>

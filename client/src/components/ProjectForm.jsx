@@ -8,6 +8,7 @@ export default function ProjectForm(props) {
   const { projects, setProjects, difficultyArr } = props
   const { isAuthenticated } = useAuth()
 
+  // State for form inputs and UI
   const [showModal, setShowModal] = useState(false)
   const [projectName, setProjectName] = useState('')
   const [description, setDescription] = useState('')
@@ -16,6 +17,9 @@ export default function ProjectForm(props) {
   const [error, setError] = useState(null)
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1'
+
+  // Handle form submission
   async function handleSubmitForm() {
     if (!isAuthenticated) {
       setShowModal(true)
@@ -40,7 +44,7 @@ export default function ProjectForm(props) {
     try {
       const formattedDate = new Date(date) || new Date()
       const res = await axios.post(
-        'http://localhost:3000/api/v1/projects',
+        `${API_URL}/projects`,
         {
           title: projectName,
           description,
@@ -63,6 +67,7 @@ export default function ProjectForm(props) {
     }
   }
 
+  // Validate date range
   const validateDate = (date) => {
     const minDate = new Date('1990-01-01')
     const maxDate = new Date('2030-12-31')
@@ -71,18 +76,21 @@ export default function ProjectForm(props) {
     return selectedDate >= minDate && selectedDate <= maxDate
   }
 
+  // Close the authentication modal
   function handleCloseModal() {
     setShowModal(false)
   }
 
   return (
     <>
+      {/* Authentication modal */}
       {showModal && (
         <Modal handleCloseModal={handleCloseModal}>
           <Authentication handleCloseModal={handleCloseModal} />
         </Modal>
       )}
 
+      {/* Form header */}
       <div className='section-header'>
         <i className='fa-solid fa-pencil pt-6 text-xl' />
         <h2>
@@ -91,6 +99,8 @@ export default function ProjectForm(props) {
             : 'Add another project'}
         </h2>
       </div>
+
+      {/* Project name input */}
       <h4>Choose project name</h4>
       <input
         onChange={(e) => {
@@ -100,6 +110,8 @@ export default function ProjectForm(props) {
         placeholder='Project 1'
         value={projectName}
       />
+
+      {/* Description textarea */}
       <h4>Enter description</h4>
       <textarea
         onChange={(e) => {
@@ -109,6 +121,8 @@ export default function ProjectForm(props) {
         placeholder='This project...'
         rows='3'
       ></textarea>
+
+      {/* Difficulty selection */}
       <h4>Select difficulty</h4>
       <div className='diff-grid'>
         {difficultyArr.map((diff, diffIndex) => {
@@ -137,6 +151,8 @@ export default function ProjectForm(props) {
           )
         })}
       </div>
+
+      {/* Date input */}
       <h4>Created at:</h4>
       <input
         onChange={(e) => {
@@ -147,6 +163,8 @@ export default function ProjectForm(props) {
         max='2030-12-31'
         value={date}
       ></input>
+
+      {/* Submit button */}
       <button
         onClick={() => {
           handleSubmitForm()
@@ -155,7 +173,9 @@ export default function ProjectForm(props) {
       >
         <p>{isSubmitting ? 'Creating...' : 'Create project'}</p>
       </button>
-      {error && <p className='text-red-500'>{error}</p>}
+
+      {/* Error message */}
+      {error && <p className='text-red-500'>❌ {error}</p>}
     </>
   )
 }

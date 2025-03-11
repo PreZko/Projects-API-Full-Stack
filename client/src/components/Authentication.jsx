@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 export default function Authentication(props) {
   const { handleCloseModal } = props
 
+  // State for form inputs and UI
   const [isRegistering, setIsRegistering] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -12,6 +13,7 @@ export default function Authentication(props) {
   const [isAuthenticating, setIsAuthenticating] = useState(false)
   const [error, setError] = useState(null)
 
+  // Access authentication functions from context
   const { login, register } = useAuth()
 
   async function handleAuthenticate() {
@@ -25,13 +27,7 @@ export default function Authentication(props) {
       }
       handleCloseModal()
     } catch (err) {
-      console.log(err)
-      if (err.response && err.response.data && err.response.data.msg) {
-        console.log(err.response.data.msg)
-        setError(err.response.data.msg)
-      } else {
-        setError('An unexpected error occurred. Please try again.')
-      }
+      setError(err.message)
     } finally {
       setIsAuthenticating(false)
     }
@@ -41,7 +37,10 @@ export default function Authentication(props) {
     <>
       <h2>{isRegistering ? 'Sign up' : 'Log in'}</h2>
       <p>{isRegistering ? 'Create an account' : 'Sign in to your account'}</p>
+      {/* Display error message if any */}
       {error && <p>❌ {error}</p>}
+
+      {/* Username input for registration */}
       {isRegistering && (
         <input
           value={username}
@@ -51,6 +50,8 @@ export default function Authentication(props) {
           placeholder='Username'
         ></input>
       )}
+
+      {/* Email input */}
       <input
         value={email}
         onChange={(e) => {
@@ -58,6 +59,8 @@ export default function Authentication(props) {
         }}
         placeholder='Email'
       ></input>
+
+      {/* Password input */}
       <input
         value={password}
         onChange={(e) => {
@@ -66,10 +69,15 @@ export default function Authentication(props) {
         type='password'
         placeholder='********'
       ></input>
-      <button onClick={handleAuthenticate}>
+
+      {/* Submit button */}
+      <button onClick={handleAuthenticate} disabled={isAuthenticating}>
         <p>{isAuthenticating ? 'Authenticating...' : 'Submit'}</p>
       </button>
-      <hr></hr>
+
+      <hr />
+
+      {/* Toggle between login and sign-up */}
       <div className='register-content'>
         <p className='pb-2'>
           {isRegistering

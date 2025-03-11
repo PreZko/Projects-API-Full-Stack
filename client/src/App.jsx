@@ -12,6 +12,9 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1'
+
+  // Difficulty levels with associated colors for UI
   const difficultyArr = [
     {
       label: 'Super Easy',
@@ -40,30 +43,24 @@ function App() {
     },
   ]
 
+  // Fetch projects data from the API
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:3000/api/v1/projects',
-          { withCredentials: true }
-        )
+        const response = await axios.get(`${API_URL}/projects`, {
+          withCredentials: true,
+        })
         setProjects(response.data.projects)
         setLoading(false)
       } catch (err) {
-        console.log('Unable to fetch data')
-        if (err.response && err.response.data && err.response.data.msg)
-          setError(err.response.data.msg)
-        else setError('An unexpected error occurred')
+        setError(err.response?.data?.msg || 'An unexpected error occurred')
         setLoading(false)
       }
     }
     fetchData()
-  }, [isAuthenticated])
+  }, [isAuthenticated]) // Re-fetch data when authentication status changes
 
-  useEffect(() => {
-    console.log('Updated projects:', projects)
-  }, [projects])
-
+  // Show loading spinner while data is being fetched
   if (loading) {
     return (
       <div className='flex h-screen items-center justify-center'>
@@ -72,18 +69,24 @@ function App() {
     )
   }
 
+  // Show error message if data fetching fails
   if (error && error != 'No token provided') {
     return <div>Error: {error}</div>
   }
 
   return (
     <Layout>
+      {/* Show introduction for unauthenticated users */}
       {!isAuthenticated && <Introduction />}
+
+      {/* Project form for adding new projects */}
       <ProjectForm
         difficultyArr={difficultyArr}
         projects={projects}
         setProjects={setProjects}
       />
+
+      {/* Show dashboard for authenticated users */}
       {isAuthenticated && (
         <Dashboard
           difficultyArr={difficultyArr}

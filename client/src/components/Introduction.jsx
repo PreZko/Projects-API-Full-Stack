@@ -1,40 +1,52 @@
 import React from 'react'
 
 export default function Introduction() {
+  // Object to store HTTP method details
+  const methods = {
+    GET: {
+      text: 'text-green-300',
+      bg: 'bg-green-700',
+      info: 'See all your projects',
+    },
+    POST: {
+      text: 'text-yellow-300',
+      bg: 'bg-yellow-700',
+      info: 'Add a project',
+    },
+    PATCH: {
+      text: 'text-purple-300',
+      bg: 'bg-purple-700',
+      info: 'Update an existing project',
+    },
+    DELETE: {
+      text: 'text-red-300',
+      bg: 'bg-red-700',
+      info: 'Remove a project',
+    },
+  }
   return (
     <>
+      {/* Main heading */}
       <h1 className='pt-10 tracking-tighter font-semibold'>
         Manage your projects for free!
       </h1>
+
+      {/* List of benefits */}
       <div className='benefits-list'>
         <h3 className='tracking-tighter font-medium'>
           Try <span className='text-gradient'>ProjectMan</span> and...
         </h3>
-        <p>
-          <span className='text-green-300 bg-green-700 rounded-sm px-2 '>
-            GET
-          </span>{' '}
-          See all your projects
-        </p>
-        <p>
-          <span className='text-yellow-300 bg-yellow-700 rounded-sm px-2 '>
-            POST
-          </span>{' '}
-          Add a project
-        </p>
-        <p>
-          <span className='text-purple-300 bg-purple-700 rounded-sm px-2 '>
-            PATCH
-          </span>{' '}
-          Update an existing project
-        </p>
-        <p>
-          <span className='text-red-300 bg-red-700 rounded-sm px-2 '>
-            DELETE
-          </span>{' '}
-          Remove a project
-        </p>
+        {Object.entries(methods).map(([method, { text, bg, info }]) => {
+          return (
+            <p key={method}>
+              <span className={`${text} ${bg} rounded-sm px-2`}>{method}</span>{' '}
+              {info}
+            </p>
+          )
+        })}
       </div>
+
+      {/* Info card about backend capabilities */}
       <div className='info-card'>
         <div className='flex items-center gap-2'>
           <i className='fa-solid fa-circle-info'></i>
