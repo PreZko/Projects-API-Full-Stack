@@ -9,6 +9,7 @@ import rateLimit from 'express-rate-limit'
 
 import projectsRouter from './routes/projects.js'
 import authRouter from './routes/auth.js'
+import publicRouter from './routes/public.js'
 
 import errorHandlerMiddleware from './middleware/error-handler.js'
 import notFoundMiddleware from './middleware/not-found.js'
@@ -31,7 +32,10 @@ app.use(cookieParser())
 app.use(helmet())
 app.use(
   cors({
-    origin: 'https://projectman.up.railway.app',
+    origin: [
+      'https://projectman.up.railway.app',
+      'https://presiyan.netlify.app',
+    ],
     credentials: true,
   })
 )
@@ -43,6 +47,7 @@ app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 1000 }))
 
 // Routes
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/public', publicRouter)
 app.use('/api/v1/projects', authMiddleware, projectsRouter)
 
 // Error handling
