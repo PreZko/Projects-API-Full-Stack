@@ -2,7 +2,7 @@ export default function Header({ isAuthenticated, logout, setShowModal }) {
   return (
     <header>
       <div>
-        <h1 className='text-gradient'>PROJECTMAN API</h1>
+        <h1 className='text-gradient text-xl sm:text-3xl'>PROJECTMAN API</h1>
         <p>To Track Your Projects</p>
       </div>
       {isAuthenticated ? (
@@ -16,7 +16,8 @@ export default function Header({ isAuthenticated, logout, setShowModal }) {
             setShowModal(true)
           }}
         >
-          <p>Sign up Free</p>
+          <span className='hidden sm:inline'>Sign up Free</span>
+          <span className='sm:hidden'>Sign up</span>
           <i className='fa-solid fa-circle-user'></i>
         </button>
       )}

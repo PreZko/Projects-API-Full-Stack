@@ -132,7 +132,7 @@ export default function ProjectForm(props) {
                 setDifficulty(diffIndex + 1)
               }}
               className={
-                'button-card ' +
+                'button-card flex justify-between flex-col items-center' +
                 (diffIndex + 1 === difficulty ? 'diff-button-selected' : ' ')
               }
               key={diffIndex}
