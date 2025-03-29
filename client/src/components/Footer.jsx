@@ -3,7 +3,7 @@ export default function Footer() {
     <footer>
       <p>
         <span className='text-gradient'>ProjectMan</span> was made by{' '}
-        <a href='https://www.presiyan-bankov.com' target='_blank'>
+        <a href='https://presiyan.netlify.app' target='_blank'>
           PreZko
         </a>
         <br /> using <a href='https://react.dev/'>React</a> and{' '}
