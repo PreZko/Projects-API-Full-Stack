@@ -18,7 +18,7 @@ export default function Footer() {
         Check out the project on{' '}
         <a
           target='_blank'
-          href='https://github.com/PreZko/Projects-API-Full-Stack'
+          href='https://github.com/presiyanbankov/Projects-API-Full-Stack'
         >
           GitHub
         </a>

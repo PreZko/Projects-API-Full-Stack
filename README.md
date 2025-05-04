@@ -77,7 +77,7 @@ A full-stack project management application with authentication and CRUD operati
 
 1. Clone repository:
    ```bash
-   git clone https://github.com/PreZko/Projects-API-Full-Stack.git
+   git clone https://github.com/presiyanbankov/Projects-API-Full-Stack.git
    cd server
    ```
 2. Install dependencies:
@@ -181,4 +181,4 @@ If you'd like to connect or have any questions, feel free to reach out:
 
 - **Email**: presiyan_bankov@gmail.com
 - **LinkedIn**: [Presiyan Bankov](https://linkedin.com/in/presiyan-bankov)
-- **GitHub**: [PreZko](https://github.com/prezko)
+- **GitHub**: [presiyanbankov](https://github.com/presiyanbankov)
